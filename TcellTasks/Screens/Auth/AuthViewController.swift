@@ -9,8 +9,8 @@ import UIKit
 
 class AuthViewController: UIViewController {
     static func storyboardInstance() -> AuthViewController? {
-        let storyboard = UIStoryboard(name: String(describing: self), bundle: nil)
-        return storyboard.instantiateInitialViewController() as? AuthViewController
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        return storyboard.instantiateViewController(identifier: String(describing: self)) as? AuthViewController
     }
     
     //MARK: - IBOutlets
@@ -18,8 +18,12 @@ class AuthViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: StoryboardID.auth.id)
-        navigationController?.pushViewController(vc, animated: true)
+    }
+    @IBAction func actionAuthButton(_ sender: UIButton) {
+        
+        if let TasksViewController = TasksViewController.storyboardInstance() {
+                navigationController?.pushViewController(TasksViewController, animated: true)
+            }
     }
     
     
