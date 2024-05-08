@@ -113,6 +113,8 @@
                     <navigationItem key="navigationItem" id="cNa-Nl-lxu"/>
                     <connections>
                         <outlet property="authButton" destination="8qv-HM-ord" id="KaS-DG-kXW"/>
+                        <outlet property="emailTextField" destination="dVm-af-4op" id="72O-f6-Dra"/>
+                        <outlet property="passwordTextField" destination="dHH-mP-JUQ" id="BjL-bh-2Am"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -161,7 +163,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zhO-wc-ZcN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1640.4580152671756" y="-2.1126760563380285"/>
+            <point key="canvasLocation" x="1815" y="-2"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="sUk-ah-esl">

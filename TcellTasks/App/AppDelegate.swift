@@ -14,14 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        APIManager.shared.login(email: "Rasuljon.Boboev@tcell.tj", password: "Real102022") { result in
-            switch result {
-            case .success(let success):
-                print(success)
-            case .failure(let error):
-                print(error)
-            }
-        }
+        //Rasuljon.Boboev@tcell.tj
+        //Real102022
         return true
     }
 

@@ -14,16 +14,34 @@ class AuthViewController: UIViewController {
     }
     
     //MARK: - IBOutlets
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var authButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
     }
+    
     @IBAction func actionAuthButton(_ sender: UIButton) {
-        
-        if let TasksViewController = TasksViewController.storyboardInstance() {
-                navigationController?.pushViewController(TasksViewController, animated: true)
+        guard let email = emailTextField.text,
+              let password = passwordTextField.text
+        else { return }
+        APIManager.shared.login(email: email,
+                                password: password) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let response):
+                print(response.token)
+                
+                if let TasksViewController = TasksViewController.storyboardInstance() {
+                    navigationController?.pushViewController(TasksViewController, animated: true)
+                }
+            case .failure(let error):
+                print(error)
             }
+        }
     }
     
     
