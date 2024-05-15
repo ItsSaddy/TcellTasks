@@ -6,6 +6,7 @@
 //
 
 import Moya
+import Foundation
 
 final class APIManager {
     static let shared = APIManager()
@@ -14,12 +15,19 @@ final class APIManager {
     
     private func requestObject<T: Decodable>(_ target: API,
                                         completion: @escaping (Result<T, MoyaError>) -> Void) {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy.MM.dd'T'HH:mm:ss"
+        decoder.dateDecodingStrategy = .formatted(dateFormatter)
+            
         provider.request(target) { result in
             switch result {
             case let .success(response):
                 do {
                     let filteredResponse = try response.filterSuccessfulStatusCodes()
-                    let mappedResponse = try filteredResponse.map(T.self)
+                    let mappedResponse = try filteredResponse.map(T.self, using: decoder)
                     completion(.success(mappedResponse))
                 }
                 catch let error {
@@ -36,5 +44,9 @@ final class APIManager {
 extension APIManager {
     func login(email: String, password: String, completion: @escaping (Result<TokenResponse, MoyaError>) -> Void) {
         requestObject(.login(email: email, password: password), completion: completion)
+    }
+    
+    func task(by stateID: Int, completion: @escaping (Result<TaskListResponse, MoyaError>) -> Void) {
+        requestObject(.task(stateID: stateID), completion: completion)
     }
 }

@@ -8,9 +8,9 @@
 import UIKit
 
 class AuthViewController: UIViewController {
-    static func storyboardInstance() -> AuthViewController? {
+    static func storyboardInstance() -> AuthViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        return storyboard.instantiateViewController(identifier: String(describing: self)) as? AuthViewController
+        return storyboard.instantiateViewController(identifier: String(describing: self)) as! AuthViewController
     }
     
     //MARK: - IBOutlets
@@ -35,9 +35,9 @@ class AuthViewController: UIViewController {
             case .success(let response):
                 print(response.token)
                 
-                if let TasksViewController = TasksViewController.storyboardInstance() {
-                    navigationController?.pushViewController(TasksViewController, animated: true)
-                }
+                KeychainService.shared.token = response.token
+                
+                navigationController?.pushViewController(TasksViewController.storyboardInstance(), animated: true)
             case .failure(let error):
                 print(error)
             }

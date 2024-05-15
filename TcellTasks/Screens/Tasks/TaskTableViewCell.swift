@@ -15,33 +15,50 @@ class TaskTableViewCell: UITableViewCell {
     }()
     
     //MARK: - @IBOutlet
+    @IBOutlet weak var objectLabel: UILabel!
+    @IBOutlet weak var workTypeLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var numberIdLabel: UILabel!
     @IBOutlet weak var moreVStack: UIStackView!
-    @IBOutlet weak var moreInformationImage: UIImageView!
+    @IBOutlet weak var moreInfoImage: UIImageView!
     @IBOutlet weak var goToTaskButton: UIButton!
-    
     @IBOutlet weak var moreVStackHeight: NSLayoutConstraint!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         setupViews()
     }
-
-    var isMoreInformationHidden: Bool = true {
-        didSet {
-            moreVStack.isHidden = isMoreInformationHidden
-            
-            if isMoreInformationHidden {
-                moreVStackHeight.constant = 0
-                moreInformationImage.image = UIImage(systemName: "chevron.down")
-            }
-            else {
-                moreVStackHeight.constant = 180
-                moreInformationImage.image = UIImage(systemName: "chevron.up")
-            }
-            
-            layoutIfNeeded()
+    
+    func configure(task: TaskResponse, isMoreInfoHidden: Bool) {
+        setup(task: task)
+        calculateMoreInfoLayout(with: isMoreInfoHidden)
+    }
+    
+    private func setup(task: TaskResponse) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.yyyy"
+        
+        objectLabel.text = task.obj
+        workTypeLabel.text = task.workType
+        dateLabel.text = dateFormatter.string(from: task.date)
+        numberIdLabel.text = task.id.description
+        
+    }
+    
+    private func calculateMoreInfoLayout(with isMoreInfoHidden: Bool) {
+        moreVStack.isHidden = isMoreInfoHidden
+        
+        if isMoreInfoHidden {
+            moreVStackHeight.constant = 0
+            moreInfoImage.image = UIImage(systemName: "chevron.down")
         }
+        else {
+            moreVStackHeight.constant = 230
+            moreInfoImage.image = UIImage(systemName: "chevron.up")
+        }
+        
+        layoutIfNeeded()
     }
 }
 

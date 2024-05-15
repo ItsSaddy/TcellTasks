@@ -20,6 +20,12 @@
 		2D4A7F2D2BEB854500B0F793 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D4A7F2C2BEB854500B0F793 /* APIManager.swift */; };
 		2D4A7F302BEB8F0B00B0F793 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 2D4A7F2F2BEB8F0B00B0F793 /* Moya */; };
 		2D4A7F352BEB8FAF00B0F793 /* TokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D4A7F342BEB8FAF00B0F793 /* TokenResponse.swift */; };
+		2D4A7F382BEB9EA300B0F793 /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2D4A7F372BEB9EA300B0F793 /* KeychainSwift */; };
+		2DFF0FDF2BF2222D00B63D63 /* TaskResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFF0FDE2BF2222D00B63D63 /* TaskResponse.swift */; };
+		2DFF0FE12BF2271A00B63D63 /* TaskListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFF0FE02BF2271A00B63D63 /* TaskListResponse.swift */; };
+		2DFF0FE42BF36AE500B63D63 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFF0FE32BF36AE500B63D63 /* KeychainService.swift */; };
+		2DFF0FE72BF371D700B63D63 /* LoadingFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFF0FE62BF371D700B63D63 /* LoadingFooterView.swift */; };
+		2DFF0FEA2BF394C700B63D63 /* TaskDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFF0FE92BF394C700B63D63 /* TaskDetailController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +43,11 @@
 		2D4A7F2A2BEB836300B0F793 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		2D4A7F2C2BEB854500B0F793 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		2D4A7F342BEB8FAF00B0F793 /* TokenResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenResponse.swift; sourceTree = "<group>"; };
+		2DFF0FDE2BF2222D00B63D63 /* TaskResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskResponse.swift; sourceTree = "<group>"; };
+		2DFF0FE02BF2271A00B63D63 /* TaskListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListResponse.swift; sourceTree = "<group>"; };
+		2DFF0FE32BF36AE500B63D63 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		2DFF0FE62BF371D700B63D63 /* LoadingFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingFooterView.swift; sourceTree = "<group>"; };
+		2DFF0FE92BF394C700B63D63 /* TaskDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D4A7F382BEB9EA300B0F793 /* KeychainSwift in Frameworks */,
 				2D4A7F302BEB8F0B00B0F793 /* Moya in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -71,12 +83,13 @@
 		2D367D8E2BE38AE700F160D2 /* TcellTasks */ = {
 			isa = PBXGroup;
 			children = (
-				2D4A7F252BEB831B00B0F793 /* Networking */,
+				2DFF0FE82BF371E100B63D63 /* Global Views */,
+				2DFF0FE22BF36AD400B63D63 /* Services */,
 				2D4A7F292BEB835200B0F793 /* Screens */,
 				2D4A7F282BEB834600B0F793 /* App */,
 				2D367D952BE38AE700F160D2 /* Main.storyboard */,
-				2D367D982BE38AE800F160D2 /* Assets.xcassets */,
 				2D367D9A2BE38AE800F160D2 /* LaunchScreen.storyboard */,
+				2D367D982BE38AE800F160D2 /* Assets.xcassets */,
 				2D367D9D2BE38AE800F160D2 /* Info.plist */,
 			);
 			path = TcellTasks;
@@ -98,6 +111,7 @@
 				2D367DA52BE3B89C00F160D2 /* TasksViewController.swift */,
 				2D4A7F202BE501E200B0F793 /* TaskTableViewCell.swift */,
 				2D4A7F212BE501E200B0F793 /* TaskTableViewCell.xib */,
+				2DFF0FE92BF394C700B63D63 /* TaskDetailController.swift */,
 			);
 			path = Tasks;
 			sourceTree = "<group>";
@@ -139,8 +153,35 @@
 			isa = PBXGroup;
 			children = (
 				2D4A7F342BEB8FAF00B0F793 /* TokenResponse.swift */,
+				2DFF0FDE2BF2222D00B63D63 /* TaskResponse.swift */,
+				2DFF0FE02BF2271A00B63D63 /* TaskListResponse.swift */,
 			);
 			path = "Response Models";
+			sourceTree = "<group>";
+		};
+		2DFF0FE22BF36AD400B63D63 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				2D4A7F252BEB831B00B0F793 /* Networking */,
+				2DFF0FE52BF36D5200B63D63 /* Persistance */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		2DFF0FE52BF36D5200B63D63 /* Persistance */ = {
+			isa = PBXGroup;
+			children = (
+				2DFF0FE32BF36AE500B63D63 /* KeychainService.swift */,
+			);
+			path = Persistance;
+			sourceTree = "<group>";
+		};
+		2DFF0FE82BF371E100B63D63 /* Global Views */ = {
+			isa = PBXGroup;
+			children = (
+				2DFF0FE62BF371D700B63D63 /* LoadingFooterView.swift */,
+			);
+			path = "Global Views";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -161,6 +202,7 @@
 			name = TcellTasks;
 			packageProductDependencies = (
 				2D4A7F2F2BEB8F0B00B0F793 /* Moya */,
+				2D4A7F372BEB9EA300B0F793 /* KeychainSwift */,
 			);
 			productName = TcellTasks;
 			productReference = 2D367D8C2BE38AE700F160D2 /* TcellTasks.app */;
@@ -192,6 +234,7 @@
 			mainGroup = 2D367D832BE38AE700F160D2;
 			packageReferences = (
 				2D4A7F242BEB82F000B0F793 /* XCRemoteSwiftPackageReference "Moya" */,
+				2D4A7F362BEB9EA300B0F793 /* XCRemoteSwiftPackageReference "keychain-swift" */,
 			);
 			productRefGroup = 2D367D8D2BE38AE700F160D2 /* Products */;
 			projectDirPath = "";
@@ -221,10 +264,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2DFF0FDF2BF2222D00B63D63 /* TaskResponse.swift in Sources */,
 				2D367D942BE38AE700F160D2 /* AuthViewController.swift in Sources */,
+				2DFF0FEA2BF394C700B63D63 /* TaskDetailController.swift in Sources */,
 				2D367D902BE38AE700F160D2 /* AppDelegate.swift in Sources */,
 				2D4A7F232BE501E200B0F793 /* TaskTableViewCell.swift in Sources */,
+				2DFF0FE42BF36AE500B63D63 /* KeychainService.swift in Sources */,
 				2D367DA62BE3B89C00F160D2 /* TasksViewController.swift in Sources */,
+				2DFF0FE72BF371D700B63D63 /* LoadingFooterView.swift in Sources */,
+				2DFF0FE12BF2271A00B63D63 /* TaskListResponse.swift in Sources */,
 				2D4A7F2B2BEB836300B0F793 /* API.swift in Sources */,
 				2D367D922BE38AE700F160D2 /* SceneDelegate.swift in Sources */,
 				2D4A7F352BEB8FAF00B0F793 /* TokenResponse.swift in Sources */,
@@ -461,6 +509,14 @@
 				minimumVersion = 15.0.3;
 			};
 		};
+		2D4A7F362BEB9EA300B0F793 /* XCRemoteSwiftPackageReference "keychain-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/evgenyneu/keychain-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 24.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -468,6 +524,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2D4A7F242BEB82F000B0F793 /* XCRemoteSwiftPackageReference "Moya" */;
 			productName = Moya;
+		};
+		2D4A7F372BEB9EA300B0F793 /* KeychainSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2D4A7F362BEB9EA300B0F793 /* XCRemoteSwiftPackageReference "keychain-swift" */;
+			productName = KeychainSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

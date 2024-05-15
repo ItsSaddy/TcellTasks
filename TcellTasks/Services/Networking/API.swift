@@ -10,6 +10,7 @@ import Foundation
 
 enum API {
     case login(email: String, password: String)
+    case task(stateID: Int)
 }
 
 extension API: TargetType {
@@ -23,6 +24,8 @@ extension API: TargetType {
         switch self {
         case .login:
             path = "login/"
+        case let .task(stateID):
+            path = "applications/\(stateID)/"
         }
         
         return path
@@ -32,6 +35,8 @@ extension API: TargetType {
         switch self {
         case .login:
             return .post
+        case .task:
+            return .get
         }
     }
     
@@ -44,11 +49,19 @@ extension API: TargetType {
                 "email": email,
                 "password" : password
             ], encoding: encoding)
+        case .task:
+            return .requestPlain
         }
     }
     
     var headers: [String : String]? {
-        return nil
+        var headers: [String : String] = [:]
+        
+        if let token = KeychainService.shared.token {
+            headers["Authorization"] = "Token \(token)" 
+        }
+        
+        return headers
     }
     
     
