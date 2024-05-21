@@ -82,6 +82,23 @@ private extension TasksViewController {
     }
     
     @objc func logout() {
+        let alertLogout = UIAlertController(
+            title: "Выход",
+            message: "Вы действительно хотите выйти?",
+            preferredStyle: .alert
+        )
+        
+        let alertExitButton = UIAlertAction(title: "Выйти", style: .destructive) { [weak self] _ in
+            guard let self = self else { return }
+            
+            AuthenticationService.shared.state.value = .unauthenticated
+        }
+        let alertCancelButton = UIAlertAction(title: "Отмена", style: .cancel)
+        
+        alertLogout.addAction(alertCancelButton)
+        alertLogout.addAction(alertExitButton)
+        
+        present(alertLogout, animated: true)
     }
 }
 
