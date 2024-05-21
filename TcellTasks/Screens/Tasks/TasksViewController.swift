@@ -13,6 +13,12 @@ class TasksViewController: UIViewController {
         return storyboard.instantiateViewController(identifier: String(describing: self)) as! TasksViewController
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        getTasks()
+    }
+    
     @IBOutlet weak var stateSegmentControl: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
     private let loadingFooterView = LoadingFooterView()
@@ -28,7 +34,6 @@ class TasksViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        getTasks()
     }
     
     /*
@@ -59,14 +64,24 @@ private extension TasksViewController {
         
         loadingFooterView.startAnimating()
         
+        navigationItem.leftBarButtonItem = .init(
+            title: "Выйти",
+            style: .plain,
+            target: self,
+            action: #selector(logout)
+        )
+        
         stateSegmentControl.removeAllSegments()
         
-        TaskState.allCases.forEach { state in
-            stateSegmentControl.insertSegment(withTitle: state.title,
-                                              at: stateSegmentControl.numberOfSegments,
-                                              animated: true)
-        }
+        stateSegmentControl.insertSegment(withTitle: TaskState.notClosed.title, at: 0, animated: true)
+        stateSegmentControl.insertSegment(withTitle: TaskState.inProgress.title, at: 1, animated: true)
+        stateSegmentControl.insertSegment(withTitle: TaskState.onApproval.title, at: 2, animated: true)
+        stateSegmentControl.insertSegment(withTitle: TaskState.success.title, at: 3, animated: true)
+        
         stateSegmentControl.selectedSegmentIndex = 0
+    }
+    
+    @objc func logout() {
     }
 }
 
@@ -99,8 +114,13 @@ extension TasksViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: TaskTableViewCell.identifier) as! TaskTableViewCell
         let row = indexPath.row
         
-        cell.configure(task: tasks[row],
-                       isMoreInfoHidden: !expandedCells.contains(indexPath))
+        cell.configure(
+            task: tasks[row],
+            isMoreInfoHidden: !expandedCells.contains(indexPath)
+        )
+        
+        cell.delegate = self
+        
         return cell
     }
     
@@ -110,21 +130,34 @@ extension TasksViewController: UITableViewDataSource {
 //MARK: - Requests
 private extension TasksViewController {
     func getTasks() {
-        let selectedStateID = TaskState.allCases[stateSegmentControl.selectedSegmentIndex].rawValue
-        
         loadingFooterView.startAnimating()
-        
-        APIManager.shared.task(by: selectedStateID) { [weak self] result in
-            guard let self = self else { return }
-            
-            loadingFooterView.stopAnimating()
-            
-            switch result {
-            case let .success(response):
-                tasks = response.data
-            case let .failure(error):
-                print(error)
+        TaskState.allCases.forEach { state in
+            if state.title == stateSegmentControl.titleForSegment(at: stateSegmentControl.selectedSegmentIndex) {
+                
+                APIManager.shared.task(by: state.rawValue) { [weak self] result in
+                    guard let self = self else { return }
+                    
+                    loadingFooterView.stopAnimating()
+                    
+                    switch result {
+                    case let .success(response):
+                        tasks = response.data
+                    case let .failure(error):
+                        print(error)
+                    }
+                }
             }
         }
+        
+        
+    }
+}
+
+//MARK: - TaskTableViewCellDelegate
+extension TasksViewController: TaskTableViewCellDelegate {
+    func taskButtonTapped(task: TaskResponse) {
+        let nextViewController = TaskDetailController.storyboardInstance()
+        nextViewController.task = task
+        navigationController?.pushViewController(nextViewController, animated: true)
     }
 }

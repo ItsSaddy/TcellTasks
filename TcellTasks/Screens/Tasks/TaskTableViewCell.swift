@@ -7,7 +7,12 @@
 
 import UIKit
 
+protocol TaskTableViewCellDelegate: AnyObject {
+    func taskButtonTapped(task: TaskResponse)
+}
+
 class TaskTableViewCell: UITableViewCell {
+    
     static let identifier = String(describing: TaskTableViewCell.self)
     
     static let nib: UINib = {
@@ -22,8 +27,11 @@ class TaskTableViewCell: UITableViewCell {
     @IBOutlet weak var numberIdLabel: UILabel!
     @IBOutlet weak var moreVStack: UIStackView!
     @IBOutlet weak var moreInfoImage: UIImageView!
-    @IBOutlet weak var goToTaskButton: UIButton!
+    @IBOutlet weak var taskButton: UIButton!
     @IBOutlet weak var moreVStackHeight: NSLayoutConstraint!
+    
+    weak var delegate: TaskTableViewCellDelegate?
+    private var task: TaskResponse?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -36,6 +44,8 @@ class TaskTableViewCell: UITableViewCell {
     }
     
     private func setup(task: TaskResponse) {
+        self.task = task
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yyyy"
         
@@ -60,6 +70,12 @@ class TaskTableViewCell: UITableViewCell {
         
         layoutIfNeeded()
     }
+    
+    @IBAction func taskButtonTapped(_ sender: UIButton) {
+        guard let task = task else { return }
+        
+        delegate?.taskButtonTapped(task: task)
+    }
 }
 
 //MARK: - SetupViews
@@ -72,6 +88,6 @@ extension TaskTableViewCell {
         containerView.layer.cornerRadius = 12
         containerView.clipsToBounds = true
         
-        goToTaskButton.layer.cornerRadius = 8
+        taskButton.layer.cornerRadius = 8
     }
 }

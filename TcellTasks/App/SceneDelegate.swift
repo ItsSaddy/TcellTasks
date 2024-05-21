@@ -19,17 +19,31 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: windowScene)
-            
-        let rootViewController: UIViewController
         
         if KeychainService.shared.token == nil {
-            rootViewController = AuthViewController.storyboardInstance()
+            AuthenticationService.shared.state.value = .unauthenticated
         }
         else {
-            rootViewController = TasksViewController.storyboardInstance()
+            AuthenticationService.shared.state.value = .authenticated
         }
         
-        window?.rootViewController = UINavigationController(rootViewController: rootViewController)
+        AuthenticationService.shared.state.bind { state in
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                
+                let rootViewController: UIViewController
+                
+                switch state {
+                case .authenticated:
+                    rootViewController = TasksViewController.storyboardInstance()
+                case .unauthenticated, .idle:
+                    rootViewController = AuthViewController.storyboardInstance()
+                }
+                
+                window?.rootViewController = UINavigationController(rootViewController: rootViewController)
+            }
+        }
+        
         
         window?.makeKeyAndVisible()
     }

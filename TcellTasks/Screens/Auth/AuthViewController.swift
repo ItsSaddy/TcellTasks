@@ -28,16 +28,14 @@ class AuthViewController: UIViewController {
               let password = passwordTextField.text
         else { return }
         APIManager.shared.login(email: email,
-                                password: password) { [weak self] result in
-            guard let self = self else { return }
-            
+                                password: password) { result in
             switch result {
             case .success(let response):
                 print(response.token)
                 
                 KeychainService.shared.token = response.token
                 
-                navigationController?.pushViewController(TasksViewController.storyboardInstance(), animated: true)
+                AuthenticationService.shared.state.value = .authenticated
             case .failure(let error):
                 print(error)
             }

@@ -101,6 +101,9 @@
                                                         <buttonConfiguration key="configuration" style="plain" title="Перейти к задаче">
                                                             <color key="baseForegroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         </buttonConfiguration>
+                                                        <connections>
+                                                            <action selector="taskButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Fhc-LK-0Av"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <constraints>
@@ -154,12 +157,12 @@
             <connections>
                 <outlet property="containerView" destination="Gq9-tH-pXR" id="9V9-4R-WVc"/>
                 <outlet property="dateLabel" destination="mvs-HD-LYD" id="ToA-Wg-mAA"/>
-                <outlet property="goToTaskButton" destination="WT4-3v-UuC" id="Vzs-pB-Trc"/>
                 <outlet property="moreInfoImage" destination="8ul-sP-Xys" id="yAL-OO-2Fb"/>
                 <outlet property="moreVStack" destination="njc-hY-Hei" id="5Bz-ah-foH"/>
                 <outlet property="moreVStackHeight" destination="CSJ-ih-7wl" id="Bp8-0K-jbP"/>
                 <outlet property="numberIdLabel" destination="cRk-9d-fqa" id="08m-rI-fte"/>
                 <outlet property="objectLabel" destination="yed-iv-n5k" id="vnD-WH-wM6"/>
+                <outlet property="taskButton" destination="WT4-3v-UuC" id="Vzs-pB-Trc"/>
                 <outlet property="workTypeLabel" destination="bN8-GP-SQF" id="X0K-Yc-xW1"/>
             </connections>
             <point key="canvasLocation" x="78.625954198473281" y="138.38028169014086"/>

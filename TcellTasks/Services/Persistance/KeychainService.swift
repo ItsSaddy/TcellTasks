@@ -31,5 +31,9 @@ final class KeychainService {
         static let token = "token"
     }
     
+    func clear() {
+        keychain.clear()
+    }
 }
+
 

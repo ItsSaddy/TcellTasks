@@ -8,17 +8,19 @@
 import Moya
 import Foundation
 
-enum API {
+public enum API {
     case login(email: String, password: String)
     case task(stateID: Int)
+    case completeTask(id: Int, images: [Data], comment: String, isGoToPlaceRequired: Int, state: Int)
+    case startTask(id: Int, state: Int)
 }
 
 extension API: TargetType {
-    var baseURL: URL {
+    public var baseURL: URL {
         return URL(string: "https://wfm.tcell.tj/api/v1/")!
     }
     
-    var path: String {
+    public var path: String {
         var path: String
         
         switch self {
@@ -26,21 +28,25 @@ extension API: TargetType {
             path = "login/"
         case let .task(stateID):
             path = "applications/\(stateID)/"
+        case .completeTask, .startTask:
+            path = "application/start/"
         }
         
         return path
     }
     
-    var method: Moya.Method {
+    public var method: Moya.Method {
         switch self {
         case .login:
             return .post
         case .task:
             return .get
+        case .completeTask, .startTask:
+            return .put
         }
     }
     
-    var task: Moya.Task {
+    public var task: Moya.Task {
         let encoding = JSONEncoding.default
         
         switch self {
@@ -51,18 +57,43 @@ extension API: TargetType {
             ], encoding: encoding)
         case .task:
             return .requestPlain
+        case let .startTask(id, stateID):
+            return .requestParameters(parameters: ["id": id, "state": stateID], encoding: URLEncoding.httpBody)
+        case let .completeTask(id, images, comment, isGoToPlaceRequired, state):
+            var multipartData: [MultipartFormData] = images.map({ imageData in
+                MultipartFormData(
+                    provider: .data(imageData),
+                    name: "images",
+                    fileName: "photo.jpg",
+                    mimeType: "image/jpeg"
+                )
+            })
+            
+            if let idData = id.description.data(using: .utf8) {
+                multipartData.append(.init(provider: .data(idData), name: "id"))
+            }
+            
+            if let commentData = comment.data(using: .utf8) {
+                multipartData.append(.init(provider: .data(commentData), name: "comment"))
+            }
+            
+            if let isGoToPlaceRequiredData = isGoToPlaceRequired.description.data(using: .utf8) {
+                multipartData.append(.init(provider: .data(isGoToPlaceRequiredData), name: "is_go_to_place_required"))
+            }
+            
+            if let stateData = state.description.data(using: .utf8) {
+                multipartData.append(.init(provider: .data(stateData), name: "state"))
+            }
+            
+            return .uploadMultipart(multipartData)
         }
     }
     
-    var headers: [String : String]? {
-        var headers: [String : String] = [:]
-        
-        if let token = KeychainService.shared.token {
-            headers["Authorization"] = "Token \(token)" 
-        }
-        
-        return headers
+    public var headers: [String : String]? {
+        return nil
     }
     
-    
+    public var validationType: ValidationType {
+        return .successCodes
+    }
 }

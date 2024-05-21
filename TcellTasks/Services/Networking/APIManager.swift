@@ -11,18 +11,21 @@ import Foundation
 final class APIManager {
     static let shared = APIManager()
     
-    private let provider: MoyaProvider<API> = .init(plugins: [NetworkLoggerPlugin.verbose])
+    private let networking: Networking = Networking.defaultNetworking()
     
-    private func requestObject<T: Decodable>(_ target: API,
-                                        completion: @escaping (Result<T, MoyaError>) -> Void) {
+    private func requestWithoutObject(_ target: API, completion: @escaping (Result<Response, MoyaError>) -> Void) {
+        networking.provider.request(target, completion: completion)
+    }
+    
+    private func requestObject<T: Decodable>(_ target: API, completion: @escaping (Result<T, MoyaError>) -> Void) {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy.MM.dd'T'HH:mm:ss"
         decoder.dateDecodingStrategy = .formatted(dateFormatter)
-            
-        provider.request(target) { result in
+        
+        networking.provider.request(target) { result in
             switch result {
             case let .success(response):
                 do {
@@ -48,5 +51,27 @@ extension APIManager {
     
     func task(by stateID: Int, completion: @escaping (Result<TaskListResponse, MoyaError>) -> Void) {
         requestObject(.task(stateID: stateID), completion: completion)
+    }
+    
+    func completeTask(
+        id: Int,
+        images: [Data],
+        comment: String,
+        isGoToPlaceRequired: Int,
+        state: Int,
+        completion: @escaping (Result<Response, MoyaError>) -> Void
+    ) {
+        requestWithoutObject(.completeTask(
+            id: id,
+            images: images,
+            comment: comment,
+            isGoToPlaceRequired: isGoToPlaceRequired,
+            state: state),
+                      completion: completion
+        )
+    }
+    
+    func startTask(id: Int, stateID: Int, completion: @escaping  (Result<Response, MoyaError>) -> Void) {
+        requestWithoutObject(.startTask(id: id, state: stateID), completion: completion)
     }
 }

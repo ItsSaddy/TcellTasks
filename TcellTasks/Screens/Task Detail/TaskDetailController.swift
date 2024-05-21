@@ -5,6 +5,7 @@
 //  Created by Boboev Saddam on 14/05/24.
 //
 
+import Moya
 import Foundation
 import UIKit
 
@@ -17,6 +18,7 @@ class TaskDetailController: UIViewController  {
     @IBOutlet weak var descriptionLabel: UILabel!
     
     var task: TaskResponse?
+    var state: TaskState?
     
     static func storyboardInstance() -> TaskDetailController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -30,7 +32,7 @@ class TaskDetailController: UIViewController  {
     }
     
     func setupData() {
-        guard let task = task else { return }
+        guard var task = task else { return }
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yyyy"
@@ -58,7 +60,28 @@ class TaskDetailController: UIViewController  {
     }
     
     @IBAction func taskButtonAction(_ sender: UIButton) {
-        
+        guard let task = task else { return }
+        switch task.state {
+        case .notClosed:
+            APIManager.shared.startTask(id: task.id, stateID: TaskState.inProgress.rawValue) { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case let .success(result):
+                    self.task?.state = .inProgress
+                    setupData()
+                case let .failure(error):
+                    print(error)
+                }
+            }
+        case .inProgress:
+            self.task?.state = .success
+            
+            let nextViewController = CompleteTaskViewController.storyboardInstance()
+            nextViewController.task = task
+            navigationController?.pushViewController(nextViewController, animated: true)
+        default:
+            break
+        }
     }
 }
 
