@@ -20,6 +20,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: windowScene)
         
+        print(KeychainService.shared.token)
+        
         if KeychainService.shared.token == nil {
             AuthenticationService.shared.state.value = .unauthenticated
         }
@@ -38,6 +40,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     rootViewController = TabBarController.storyboardInstance()
                     
                 case .unauthenticated, .idle:
+                    KeychainService.shared.clear()
+                    
                     rootViewController = UINavigationController(rootViewController: AuthViewController.storyboardInstance())
                 }
                 

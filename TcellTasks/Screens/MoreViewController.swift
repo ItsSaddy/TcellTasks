@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class MoreScreenViewController: UIViewController {
+class MoreViewController: UIViewController {
     override func viewDidLoad() {
         setupViews()
     }
@@ -22,7 +22,6 @@ class MoreScreenViewController: UIViewController {
         )
         
         let alertExitButton = UIAlertAction(title: "Выйти", style: .destructive) { _ in
-            
             AuthenticationService.shared.state.value = .unauthenticated
         }
         let alertCancelButton = UIAlertAction(title: "Отмена", style: .cancel)
@@ -35,7 +34,7 @@ class MoreScreenViewController: UIViewController {
 }
 
 //MARK: - Extensions
-extension MoreScreenViewController {
+extension MoreViewController {
     func setupViews() {
         title = "Еще"
     }

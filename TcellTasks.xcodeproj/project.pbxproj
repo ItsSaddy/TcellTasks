@@ -26,7 +26,9 @@
 		2DA97A1C2BFB8704008F9278 /* ImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DA97A1A2BFB8704008F9278 /* ImageCollectionViewCell.xib */; };
 		2DEB5B382BFCD252002C8E6D /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEB5B372BFCD252002C8E6D /* PreviewViewController.swift */; };
 		2DEB5B3A2BFF536F002C8E6D /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEB5B392BFF536F002C8E6D /* TabBarController.swift */; };
-		2DEB5B3D2BFF53F7002C8E6D /* MoreScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEB5B3C2BFF53F7002C8E6D /* MoreScreenViewController.swift */; };
+		2DEB5B3D2BFF53F7002C8E6D /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEB5B3C2BFF53F7002C8E6D /* MoreViewController.swift */; };
+		2DEB5B412C009AA3002C8E6D /* Extension + View Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEB5B402C009AA3002C8E6D /* Extension + View Controller.swift */; };
+		2DEB5B432C009B63002C8E6D /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEB5B422C009B63002C8E6D /* LoadingViewController.swift */; };
 		2DFF0FDF2BF2222D00B63D63 /* TaskResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFF0FDE2BF2222D00B63D63 /* TaskResponse.swift */; };
 		2DFF0FE12BF2271A00B63D63 /* TaskListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFF0FE02BF2271A00B63D63 /* TaskListResponse.swift */; };
 		2DFF0FE42BF36AE500B63D63 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFF0FE32BF36AE500B63D63 /* KeychainService.swift */; };
@@ -58,7 +60,9 @@
 		2DA97A1A2BFB8704008F9278 /* ImageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageCollectionViewCell.xib; sourceTree = "<group>"; };
 		2DEB5B372BFCD252002C8E6D /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 		2DEB5B392BFF536F002C8E6D /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
-		2DEB5B3C2BFF53F7002C8E6D /* MoreScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreScreenViewController.swift; sourceTree = "<group>"; };
+		2DEB5B3C2BFF53F7002C8E6D /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
+		2DEB5B402C009AA3002C8E6D /* Extension + View Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + View Controller.swift"; sourceTree = "<group>"; };
+		2DEB5B422C009B63002C8E6D /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		2DFF0FDE2BF2222D00B63D63 /* TaskResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskResponse.swift; sourceTree = "<group>"; };
 		2DFF0FE02BF2271A00B63D63 /* TaskListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListResponse.swift; sourceTree = "<group>"; };
 		2DFF0FE32BF36AE500B63D63 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
@@ -114,6 +118,7 @@
 		2D367D8E2BE38AE700F160D2 /* TcellTasks */ = {
 			isa = PBXGroup;
 			children = (
+				2DEB5B3F2C009A44002C8E6D /* Extensions */,
 				2DFF0FE82BF371E100B63D63 /* Global Views */,
 				2DFF0FE22BF36AD400B63D63 /* Services */,
 				2D4A7F292BEB835200B0F793 /* Screens */,
@@ -172,6 +177,7 @@
 			children = (
 				2D4A7F272BEB833600B0F793 /* Auth */,
 				2DEB5B3B2BFF5387002C8E6D /* Tab Bar */,
+				2DEB5B422C009B63002C8E6D /* LoadingViewController.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -206,9 +212,17 @@
 		2DEB5B3E2BFF554F002C8E6D /* More Screen */ = {
 			isa = PBXGroup;
 			children = (
-				2DEB5B3C2BFF53F7002C8E6D /* MoreScreenViewController.swift */,
+				2DEB5B3C2BFF53F7002C8E6D /* MoreViewController.swift */,
 			);
 			name = "More Screen";
+			sourceTree = "<group>";
+		};
+		2DEB5B3F2C009A44002C8E6D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2DEB5B402C009AA3002C8E6D /* Extension + View Controller.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		2DFF0FE22BF36AD400B63D63 /* Services */ = {
@@ -337,6 +351,7 @@
 			files = (
 				2DFF0FDF2BF2222D00B63D63 /* TaskResponse.swift in Sources */,
 				2D367D942BE38AE700F160D2 /* AuthViewController.swift in Sources */,
+				2DEB5B412C009AA3002C8E6D /* Extension + View Controller.swift in Sources */,
 				2D1EB87A2BF618B400F7DAB3 /* CompleteTaskViewController.swift in Sources */,
 				2DEB5B382BFCD252002C8E6D /* PreviewViewController.swift in Sources */,
 				2DFF0FF42BF4C63900B63D63 /* Networking.swift in Sources */,
@@ -345,6 +360,7 @@
 				2D4A7F232BE501E200B0F793 /* TaskTableViewCell.swift in Sources */,
 				2DFF0FE42BF36AE500B63D63 /* KeychainService.swift in Sources */,
 				2D367DA62BE3B89C00F160D2 /* TasksViewController.swift in Sources */,
+				2DEB5B432C009B63002C8E6D /* LoadingViewController.swift in Sources */,
 				2DFF0FE72BF371D700B63D63 /* LoadingFooterView.swift in Sources */,
 				2DFF0FE12BF2271A00B63D63 /* TaskListResponse.swift in Sources */,
 				2DFF0FF22BF4C63100B63D63 /* NetworkingType.swift in Sources */,
@@ -352,7 +368,7 @@
 				2D367D922BE38AE700F160D2 /* SceneDelegate.swift in Sources */,
 				2D4A7F352BEB8FAF00B0F793 /* TokenResponse.swift in Sources */,
 				2DFF0FEF2BF4C2FC00B63D63 /* AuthInterceptor.swift in Sources */,
-				2DEB5B3D2BFF53F7002C8E6D /* MoreScreenViewController.swift in Sources */,
+				2DEB5B3D2BFF53F7002C8E6D /* MoreViewController.swift in Sources */,
 				2D4A7F2D2BEB854500B0F793 /* APIManager.swift in Sources */,
 				2DEB5B3A2BFF536F002C8E6D /* TabBarController.swift in Sources */,
 				2DFF0FED2BF4C0C600B63D63 /* AuthenticationService.swift in Sources */,

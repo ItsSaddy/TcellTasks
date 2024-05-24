@@ -27,15 +27,23 @@ class AuthViewController: UIViewController {
         guard let email = emailTextField.text,
               let password = passwordTextField.text
         else { return }
+        
+        showLoadingVC()
+        
         APIManager.shared.login(email: email,
-                                password: password) { result in
+                                password: password) { [weak self] result in
+            guard let self = self else { return }
+            
+            hideLoadingVC()
+            
             switch result {
             case .success(let response):
-                print(response.token)
                 
+                print(response.token)
                 KeychainService.shared.token = response.token
                 
                 AuthenticationService.shared.state.value = .authenticated
+                
             case .failure(let error):
                 print(error)
             }
