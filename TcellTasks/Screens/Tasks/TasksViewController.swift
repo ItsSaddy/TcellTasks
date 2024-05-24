@@ -64,13 +64,6 @@ private extension TasksViewController {
         
         loadingFooterView.startAnimating()
         
-        navigationItem.leftBarButtonItem = .init(
-            title: "Выйти",
-            style: .plain,
-            target: self,
-            action: #selector(logout)
-        )
-        
         stateSegmentControl.removeAllSegments()
         
         stateSegmentControl.insertSegment(withTitle: TaskState.notClosed.title, at: 0, animated: true)
@@ -79,26 +72,6 @@ private extension TasksViewController {
         stateSegmentControl.insertSegment(withTitle: TaskState.success.title, at: 3, animated: true)
         
         stateSegmentControl.selectedSegmentIndex = 0
-    }
-    
-    @objc func logout() {
-        let alertLogout = UIAlertController(
-            title: "Выход",
-            message: "Вы действительно хотите выйти?",
-            preferredStyle: .alert
-        )
-        
-        let alertExitButton = UIAlertAction(title: "Выйти", style: .destructive) { [weak self] _ in
-            guard let self = self else { return }
-            
-            AuthenticationService.shared.state.value = .unauthenticated
-        }
-        let alertCancelButton = UIAlertAction(title: "Отмена", style: .cancel)
-        
-        alertLogout.addAction(alertCancelButton)
-        alertLogout.addAction(alertExitButton)
-        
-        present(alertLogout, animated: true)
     }
 }
 
@@ -173,8 +146,10 @@ private extension TasksViewController {
 //MARK: - TaskTableViewCellDelegate
 extension TasksViewController: TaskTableViewCellDelegate {
     func taskButtonTapped(task: TaskResponse) {
+        
         let nextViewController = TaskDetailController.storyboardInstance()
         nextViewController.task = task
+        nextViewController.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(nextViewController, animated: true)
     }
 }

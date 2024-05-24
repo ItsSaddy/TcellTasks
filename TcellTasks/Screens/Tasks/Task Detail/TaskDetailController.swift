@@ -27,12 +27,43 @@ class TaskDetailController: UIViewController  {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViews()
         setupData()
+        setupViews()
     }
     
+    @IBAction func taskButtonAction(_ sender: UIButton) {
+        guard let task = task else { return }
+        switch task.state {
+        case .notClosed:
+            APIManager.shared.startTask(id: task.id, stateID: TaskState.inProgress.rawValue) { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(_):
+                    self.task?.state = .inProgress
+                    setupData()
+                case let .failure(error):
+                    print(error)
+                }
+            }
+        case .inProgress:
+            let nextViewController = CompleteTaskViewController.storyboardInstance()
+            nextViewController.task = task
+            navigationController?.pushViewController(nextViewController, animated: true)
+        default:
+            break
+        }
+    }
+}
+
+//MARK: - SetupViews
+private extension TaskDetailController {
+    func setupViews() {
+    }
+}
+//MARK: - SetupData
+private extension TaskDetailController {
     func setupData() {
-        guard var task = task else { return }
+        guard let task = task else { return }
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yyyy"
@@ -58,36 +89,5 @@ class TaskDetailController: UIViewController  {
             taskButton.setTitle("В одобрении", for: .normal)
         }
     }
-    
-    @IBAction func taskButtonAction(_ sender: UIButton) {
-        guard let task = task else { return }
-        switch task.state {
-        case .notClosed:
-            APIManager.shared.startTask(id: task.id, stateID: TaskState.inProgress.rawValue) { [weak self] result in
-                guard let self = self else { return }
-                switch result {
-                case let .success(result):
-                    self.task?.state = .inProgress
-                    setupData()
-                case let .failure(error):
-                    print(error)
-                }
-            }
-        case .inProgress:
-            self.task?.state = .success
-            
-            let nextViewController = CompleteTaskViewController.storyboardInstance()
-            nextViewController.task = task
-            navigationController?.pushViewController(nextViewController, animated: true)
-        default:
-            break
-        }
-    }
 }
 
-//MARK: - SetupViews
-private extension TaskDetailController {
-    func setupViews() {
-        
-    }
-}

@@ -32,7 +32,7 @@ class LoadingFooterView: UIView {
 
         NSLayoutConstraint.activate([
             activityIndicator.centerXAnchor.constraint(equalTo: centerXAnchor),
-            activityIndicator.topAnchor.constraint(equalTo: topAnchor, constant: 16 ),
+            activityIndicator.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             activityIndicator.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }

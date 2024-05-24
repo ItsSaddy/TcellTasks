@@ -35,12 +35,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 
                 switch state {
                 case .authenticated:
-                    rootViewController = TasksViewController.storyboardInstance()
+                    rootViewController = TabBarController.storyboardInstance()
+                    
                 case .unauthenticated, .idle:
-                    rootViewController = AuthViewController.storyboardInstance()
+                    rootViewController = UINavigationController(rootViewController: AuthViewController.storyboardInstance())
                 }
                 
-                window?.rootViewController = UINavigationController(rootViewController: rootViewController)
+                window?.rootViewController = rootViewController
             }
         }
         

@@ -27,6 +27,7 @@ class CompleteTaskViewController: UIViewController {
         }
     }
     
+    
     let imagePicker = UIImagePickerController()
     let placeholderText = "Ваш комментарий..."
     var task: TaskResponse?
@@ -80,15 +81,15 @@ class CompleteTaskViewController: UIViewController {
                     print(failure)
                 }
             })
-            
         
     }
 }
 
+//MARK: - SetupViews
 extension CompleteTaskViewController {
-    
     func setupViews() {
         selectedImageCollection.dataSource = self
+        selectedImageCollection.delegate = self
         selectedImageCollection.register(
             ImageCollectionViewCell.nib,
             forCellWithReuseIdentifier: ImageCollectionViewCell.identifier
@@ -164,7 +165,7 @@ extension CompleteTaskViewController: UIImagePickerControllerDelegate, UINavigat
 }
 
 //MARK: - UICollectionViewDataSource
-extension CompleteTaskViewController: UICollectionViewDataSource {
+extension CompleteTaskViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return selectedPhotos.count
     }
@@ -177,4 +178,12 @@ extension CompleteTaskViewController: UICollectionViewDataSource {
         cell.imageView.image = selectedPhotos[indexPath.item]
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let preview = PreviewViewController.storyboardInstance()
+        preview.photo = selectedPhotos[indexPath.item]
+        preview.modalPresentationStyle = .formSheet
+        present(preview, animated: true, completion: nil)
+    }
 }
+
